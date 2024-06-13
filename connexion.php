@@ -41,18 +41,18 @@ include_once('formulaires.php');
 						$_SESSION['login'] = $_POST['login'];
 						if (isAdmin($_SESSION['login'])) $_SESSION["statut"] = 'admin';
 						else						     $_SESSION["statut"] = 'user';
-					header('Location: index.php');	
+						redirect('index.php',0.1);	
 
-					// 1 : on ouvre le fichier
-					$monfichier = fopen('acces.log', 'a+');
-					
-					// 2 : Ecriture dans le fichier...
-					fputs($monfichier, $_POST['login']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS \of F Y h:i:s A'));
-					
-					fputs($monfichier, "\n");
-					
-					// 3 : quand on a fini de l'utiliser, on ferme le fichier
-					fclose($monfichier);
+						// 1 : on ouvre le fichier
+						$monfichier = fopen('acces.log', 'a+');
+						
+						// 2 : Ecriture dans le fichier...
+						fputs($monfichier, $_POST['login']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS \of F Y h:i:s A'));
+						
+						fputs($monfichier, "\n");
+						
+						// 3 : quand on a fini de l'utiliser, on ferme le fichier
+						fclose($monfichier);
 					
                 } 
 				
