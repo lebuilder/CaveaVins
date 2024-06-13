@@ -108,3 +108,21 @@ function checkpass() {
     return retour;
 }
 
+/***********************************Remplissage auto valeur de quantite modif***************************************************************** */
+function quant() {
+    const selectVin = document.getElementById('id_Fil');
+    const inputQuantite = document.getElementById('Quantite');
+
+    selectVin.addEventListener('change', function() {
+        const valeurSelect = selectVin.value;
+        const Producteur = valeurSelect.split('|')[0];
+        const Annee = valeurSelect.split('|')[1];
+        const NomVin = valeurSelect.split('|')[2];
+
+        fetch(`get_quantite.php?producteur=${Producteur}&annee=${Annee}&NomVin=${NomVin}`)
+            .then(response => response.text())
+            .then(Quantite => {
+                inputQuantite.value = Quantite;
+            });
+    });
+}
