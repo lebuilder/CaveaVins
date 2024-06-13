@@ -33,7 +33,7 @@ if(!empty($_SESSION) && isset($_SESSION['admin']) && $_SESSION['admin']==True){
 				if (empty($_SESSION)) {
 					echo "Veuillez vous connecter";
 					redirect("connexion.php", 1);
-				} elseif ($_SESSION['statut'] != 'admin'){
+				} elseif ($_SESSION['statut']!= 'admin'){
 					echo "Vous n'êtes pas autorisé à accéder à cette page.";
 					redirect("index.php", 1);
 				}else {
@@ -51,7 +51,7 @@ if(!empty($_SESSION) && isset($_SESSION['admin']) && $_SESSION['admin']==True){
                     <Span class="Sous-titre">
 						<?php
 							// Affichage du message accueil en fonction de la connexion
-							echo "<h3> Bienvenue " . $_SESSION["login"] . " sur la page d'acceuil de notre cave à vin.</h3>";
+							echo "<h3> Bienvenue ". $_SESSION["login"]. " sur la page d'acceuil de notre cave à vin.</h3>";
 						?>
 					</Span>
                     
@@ -69,49 +69,45 @@ if(!empty($_SESSION) && isset($_SESSION['admin']) && $_SESSION['admin']==True){
             ?>
                 <div class="center-container">
                     <div class="form-container">
-                        <?php FormulaireModifVin(); ?>
+                        <?php FormulaireModifVin();?>
                     </div>
 		        </div>
 
                 <?php
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modifier'])) {
-					if (isset($_POST['ProducteurAnneeNomVin']) && isset($_POST['captcha'])) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modifierer'])) {
+					if (($_POST['captcha'])) {
 						//session_start(); // Démarrer la session
 						$code = isset($_SESSION["code"]) ? formater_saisie($_SESSION["code"]) : ""; // Vérifier si $_SESSION['code'] existe
 						if($_POST['captcha'] == $code) { // Comparer avec $code
-							// Traitement de la suppression
-							$ProducteurAnneeNomVin = $_POST['ProducteurAnneeNomVin'];
-							list($Producteur,$Annee, $NomVin) = explode(' - ', $ProducteurAnneeNomVin);
-
-							
-							$result = modifierVin($Producteur, $Annee, $NomVin);
-
-							
-							// Affichage des résultats
-							if ($result == 1) {
-								$Vin = listervin();?>
-								<div class="table-container">
-									<?php afficheTableau($Vin); ?>
-								<div><?php
-								echo "Modification du vin réussie.";
-							} else {
-								echo "La modification du vin a échoué.";
+							if (isset($_POST['choix_vin']) && isset($_POST['Quantite'])) {
+							list($Producteur, $Annee, $NomVin) = explode('|', $_POST['choix_vin']);
+							$Quantite = intval($_POST['Quantite']);
+								if(modifierVin($Producteur, $Annee, $NomVin, $Quantite)){
+									$Vin = listervin();?>
+									<div class="table-container">
+										<?php 
+										echo "Modification du vin réussie.";
+										afficheTableau($Vin);
+										?>
+									</div> <?php
+								}
+								else {
+									echo "Erreur lors de la modification.";
+								}
 							}
-						} else {
-							echo "Le code captcha est incorrect."; // Message en cas de code captcha incorrect
 						}
+					else {
+						echo "<h4>Le code captcha est incorrect.</h4>"; // Message en cas de code captcha incorrect
+					}
+					
 					}
 				}
-				
-            }
-            
-            ?>
-
-
+			}
+           	?>
         </article>
 
 		<footer class="footer">
-			<p>© Copyright 2023 - 2024 M.D.S</p>
+			<p>© Copyright 2023 - 2024 H.S & M.D.S</p>
 		</footer>
 
     </body>
