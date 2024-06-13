@@ -251,22 +251,30 @@ function afficheTableau($tab){
 	}
 
 //**************************************Modification*************************************************************
-	function modifierVin($Producteur, $Annee, $NomVin){
-		$retour = 0;
-				
+	function modifierVin($Producteur, $Annee, $NomVin, $Quantite) {
 		try {
-			$madb = new PDO('sqlite:bdd/CaveAVin.bd');
-			//$Vin_avant_modif = $madb->quote($Producteur);
-			//$rq = "UPDATE Vin SET Producteur='$Producteur', Annee='$Annee', Couleur='$Couleur', Region='$Region', NomVin='$NomVin' WHERE Producteur='$Vin_avant_modif';";
-			$resultat = $madb->exec($rq);
+			$madb = new PDO('sqlite:bdd/CaveAVin.db');
+			$rq = "UPDATE Stock_cave SET Quantite = :Quantite WHERE Producteur = :Producteur AND Annee = :Annee AND NomVin = :NomVin";
+			$stmt = $madb->prepare($rq);
+			$stmt->bindParam(':Quantite', $Quantite);
+			$stmt->bindParam(':Producteur', $Producteur);
+			$stmt->bindParam(':Annee', $Annee);
+			$stmt->bindParam(':NomVin', $NomVin);
+			$stmt->execute();
+			return true;
 		} catch (Exception $e) {
 			echo "Erreur de la base de donnée";
+			return false;
 		}
-		if (!empty($resultat)) {			
-			$retour = 1;
+	}
+
+	function majQuantite() {
+		if (isset($_POST['choix_vin']) && isset($_POST['Quantite'])) {
+			list($Producteur, $Annee, $NomVin) = explode('|', $_POST['choix_vin']);
+			$Quantite = intval($_POST['Quantite']);
+	
+			modifierVin($Producteur, $Annee, $NomVin, $Quantite);
 		}
-			
-		return $retour;
 	}
 
 
