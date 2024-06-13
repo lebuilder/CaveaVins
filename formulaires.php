@@ -2,16 +2,16 @@
    function FormulaireAuthentification() {
     ?>
     <div class="wrapper">
-        <img src="image/logo.png" style="width: 100px; height: 100px;">
+        <img src="image/logo.png" alt="fonc_connexion" style="width: 100px; height: 100px;">
         <form id="form1" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return checkpass();">
             <fieldset style="margin-top:10px; margin-bottom:10px;">
                 <legend style="font-size:1.5rem; margin-bottom:10px;"><b>Connexion</b></legend>	
                 <label style="font-size:1.2rem" for="id_email">Adresse Mail : </label>
-                <input  style="width: 220px; height: 30px; margin-bottom:30px" type="email" name="login" id="id_email" placeholder="@email" required size="20" /><br />
+                <input  style="width: 220px; height: 30px; margin-bottom:30px" type="email" name="login" id="id_email" placeholder="@email" required size="20"><br>
                 <label style="font-size:1.2rem" for="password">Mot de passe : </label>
-                <input  style="width: 220px; height: 30px; margin-bottom:30px" type="password" name="pass" id="password" required size="10" /><br />
+                <input  style="width: 220px; height: 30px; margin-bottom:30px" type="password" name="pass" id="password" required size="10"><br>
                 <p id = "Erreur" class = "ErreurRouge"></p>
-                <input style="width: 100px; height: 30px;" type="submit" name="connect" value="Connexion" />
+                <input style="width: 100px; height: 30px;" type="submit" name="connect" value="Connexion">
             </fieldset>
         </form>
     </div>
@@ -21,35 +21,6 @@
 //*************************************************************Menu Mohamed**********************************************************
     function menu(){
         ?>
-        <!--
-            <header class="header">
-            <nav class="nav container">
-                <div class="navigation d-flex">
-
-                    <div class="menu">
-                        <ul>
-                            <li class="nav-item"><a class="nav-link" href="index.php?action=Acceuil" title="Afficher les vin">Acceuil</a></li>
-                            <li class="nav-item"><a class="nav-link" href="region.php?action=Liste vins par region" title="Liste vins par region">Liste vins par region</a></li>	
-                            <li class="nav-item"><a class="nav-link" href="couleur.php?action=Liste vins par couleur" title="Couleur de vins">Liste vins par couleur</a></li>	
-                            
-                            <?php
-                            if ($_SESSION["statut"] == "admin") {
-                            ?>
-                            <li class="nav-item"><a class="nav-link" href="insertion.php?action=inserer_element" title="Ajouter un Vin">Ajouter un vin</a></li>	
-                            <li class="nav-item"><a class="nav-link" href="suppression.php?action=supprimer_element" title="Spprimer un element">Supprimer un élement</a></li>	
-                            <li class="nav-item"><a class="nav-link" href="modification.php?action=modifier_element" title="Modifier un Vin">Modifier un Vin</a></li>	
-                            
-                            <li class="nav-item"><a class="nav-link" href="index.php?action=logout" title="Déconnexion">Se déconnecter</a></li>	
-                            <?php
-                            }
-                            ?>
-                        </ul>				
-                    <p><a href="index.php?action=logout" title="Déconnexion">Se déconnecter</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        -->
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
             <div class="container-fluid">
                 <b class="navbar-brand" >Cave à vin</b>
