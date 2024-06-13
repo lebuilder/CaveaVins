@@ -10,7 +10,7 @@ include_once('formulaires.php');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!--Lien vers mon CSS-->
-		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<!--Lien du sript local-->
 		<script src="js/script.js"></script>
         <title>Connexion</title>
@@ -18,8 +18,6 @@ include_once('formulaires.php');
     
     <body style="background-image: url('image/cave1.webp'); background-size: 100% 120%; height: 100vh; background-repeat: no-repeat;">
         <nav>
-			
-
 			<?php
 				// affichage du formulaire de connexion ou le menu avec le nom de la personne
 				if (empty($_SESSION)) {
@@ -34,25 +32,24 @@ include_once('formulaires.php');
 				}
 				else menu();
 				
-				
 				// test de la connexion
 				if (isset($_POST['connect']) && $_POST['connect'] == 'Connexion' && isset($_POST['login']) && isset($_POST['pass'])) {
 					if (authentification($_POST['login'], $_POST["pass"])){
 						$_SESSION['login'] = $_POST['login'];
 						if (isAdmin($_SESSION['login'])) $_SESSION["statut"] = 'admin';
 						else						     $_SESSION["statut"] = 'user';
-						redirect('index.php',0.1);	
+					header('Location: index.php');	
 
-						// 1 : on ouvre le fichier
-						$monfichier = fopen('acces.log', 'a+');
-						
-						// 2 : Ecriture dans le fichier...
-						fputs($monfichier, $_POST['login']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS \of F Y h:i:s A'));
-						
-						fputs($monfichier, "\n");
-						
-						// 3 : quand on a fini de l'utiliser, on ferme le fichier
-						fclose($monfichier);
+					// 1 : on ouvre le fichier
+					$monfichier = fopen('acces.log', 'a+');
+					
+					// 2 : Ecriture dans le fichier...
+					fputs($monfichier, $_POST['login']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS \of F Y h:i:s A'));
+					
+					fputs($monfichier, "\n");
+					
+					// 3 : quand on a fini de l'utiliser, on ferme le fichier
+					fclose($monfichier);
 					
                 } 
 				
