@@ -258,6 +258,7 @@
                     </select> </br>
                     <p style="display : block; text-align : center">Quantités :</p>
                     <input type="text" style="width: auto; display: block; margin-left: auto; margin-right: auto;" id="Quantite" name="Quantite">
+                    <action="<?php include 'contact.php';?>
                     <input type="submit" style="width: 220px; display: block; margin-left: auto; margin-right: auto; margin-top :40px" value="Modifier"/>
                 </fieldset>
             </form>
