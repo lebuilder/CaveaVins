@@ -235,43 +235,39 @@
 
 //***************************************************Formulaire de modification********************************************    
     function FormulaireModifVin(){
-        try {
-            $madb = new PDO('sqlite:bdd/CaveAVin.db');
-            // Requête pour obtenir la liste des vins
-            $rq = "SELECT DISTINCT Producteur, Annee, NomVin FROM Vin";
-            $resultats = $madb->query($rq);
-            $Vin = $resultats->fetchAll(PDO::FETCH_ASSOC);
-            ?>
-            <div class="wrapper">
-                <div class="from-box login">
-                    <h3>Modifier la quantité d'un vin</h3> 
-                </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <fieldset>
-                        <select style="width: auto; height: 50px; margin-bottom:20px; margin-top:50px; display: block; margin-left: auto; margin-right: auto;" id="id_Fil" name="choix_vin" size="1" onchange="getQuantity(this.value)">
-                            <?php
-                            foreach ($Vin as $vin) {
-                                $value = $vin['Producteur'] . '|' . $vin['Annee'] . '|' . $vin['NomVin'];
-                                echo "<option value=\"$value\">" . $vin['Producteur'] .' - '. $vin['Annee'] . ' - '. $vin['NomVin'] ."</option>";
-                            }
-                            ?>
-                        </select> </br>
-                        
-                        <select style="width: auto; display: block; margin-left: auto; margin-right: auto;" name="quantite" id="quantite">
-                            <!-- les options de quantité seront générées dynamiquement -->
-                        </select>    
-
-                        <input type="submit" style="width: 220px; display: block; margin-left: auto; margin-right: auto; margin-top :40px" value="Modifier"/>
-                    </fieldset>
-                </form>
+    try {
+        $madb = new PDO('sqlite:bdd/CaveAVin.db');
+        // Requête pour obtenir la liste des vins
+        $rq = "SELECT DISTINCT Producteur, Annee, NomVin FROM Vin";
+        $resultats = $madb->query($rq);
+        $Vin = $resultats->fetchAll(PDO::FETCH_ASSOC);
+       ?>
+       <div class="wrapper">
+            <div class="from-box login">
+                <h3>Modifier le stock d'un vin</h3> 
             </div>
-            <?php
-            echo '<br>';
-        } 
-        catch (Exception $e) {
-            echo "<p>Erreur lors de la connexion à la BDD: " . $e->getMessage() . "</p>";
-        }
+            <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" onsubmit = "return quant();">
+                <fieldset>
+                    <select style="width: auto; height: 50px; margin-bottom:20px; margin-top:50px; display: block; margin-left: auto; margin-right: auto;" id="id_Fil" name="choix_vin" size="1">
+                        <?php
+                        foreach ($Vin as $vin) {
+                            $value = $vin['Producteur']. '|'. $vin['Annee']. '|'. $vin['NomVin'];
+                            echo "<option value=\"$value\">". $vin['Producteur'].' - '. $vin['Annee']. ' '. $vin['NomVin']."</option>";
+                        }
+                    ?>
+                    </select> </br>
+                    <p style="display : block; text-align : center">Quantités :</p>
+                    <input type="text" style="width: auto; display: block; margin-left: auto; margin-right: auto;" id="Quantite" name="Quantite">
+                    <input type="submit" style="width: 220px; display: block; margin-left: auto; margin-right: auto; margin-top :40px" value="Modifier"/>
+                </fieldset>
+            </form>
+        </div>
+        <?php
+    } 
+    catch (Exception $e) {
+        echo "<p>Erreur lors de la connexion à la BDD: ". $e->getMessage(). "</p>";
     }
+}
 
 
 ?>
